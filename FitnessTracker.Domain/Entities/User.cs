@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FitnessTracker.Domain.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace FitnessTracker.Domain.Entities
 {
+    [Table("Users")]
     public class User : Entity<Guid>, IUser<Guid>
     {
         public string UserName { get; set; } = string.Empty;

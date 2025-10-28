@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitnessTracker.Domain.Entities
 {
+    [Table("Badges")]
     public class TrainingSession : Entity<Guid>
     {
         public Guid UserId { get; set; }
