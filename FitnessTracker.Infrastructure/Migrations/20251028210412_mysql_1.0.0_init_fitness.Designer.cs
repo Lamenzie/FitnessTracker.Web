@@ -4,6 +4,7 @@ using FitnessTracker.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(FitnessTrackerDbContext))]
-    partial class FitnessTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251028210412_mysql_1.0.0_init_fitness")]
+    partial class mysql_100_init_fitness
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
