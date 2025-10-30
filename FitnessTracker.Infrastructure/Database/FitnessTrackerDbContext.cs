@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FitnessTracker.Domain.Entities;
+using FitnessTracker.Infrastructure.Database.Seeding;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FitnessTracker.Domain.Entities;
 
 namespace FitnessTracker.Infrastructure.Database
 {
@@ -28,22 +29,18 @@ namespace FitnessTracker.Infrastructure.Database
         {
             base.OnModelCreating(modelBuilder);
 
-            // Primární klíč pro tabulku UserBadge
+            // složený klíč UserBadge
             modelBuilder.Entity<UserBadge>()
                 .HasKey(ub => new { ub.UserId, ub.BadgeId });
 
-            // Relace mezi User a UserBadge
-            modelBuilder.Entity<UserBadge>()
-                .HasOne(ub => ub.User)
-                .WithMany(u => u.UserBadges)
-                .HasForeignKey(ub => ub.UserId);
+            // seeding
+            ExerciseInit exerciseInit = new ExerciseInit();
+            modelBuilder.Entity<Exercise>().HasData(exerciseInit.GetDefaultExercises());
 
-            // Relace mezi Badge a UserBadge
-            modelBuilder.Entity<UserBadge>()
-                .HasOne(ub => ub.Badge)
-                .WithMany(b => b.UserBadges)
-                .HasForeignKey(ub => ub.BadgeId);
+            BadgeInit badgeInit = new BadgeInit();
+            modelBuilder.Entity<Badge>().HasData(badgeInit.GetDefaultBadges());
         }
+
     }
 }
 
