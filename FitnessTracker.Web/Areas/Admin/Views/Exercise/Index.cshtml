@@ -1,0 +1,19 @@
+﻿@model IList<FitnessTracker.Domain.Entities.Exercise>
+
+<h1>Správa cviků</h1>
+
+<table class="table">
+    <thead>
+        <tr><th>ID</th><th>Název</th><th>Popis</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var ex in Model)
+        {
+            <tr>
+                <td>@ex.Id</td>
+                <td>@ex.Name</td>
+                <td>@ex.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
