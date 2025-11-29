@@ -1,5 +1,5 @@
 ﻿using FitnessTracker.Application.Interfaces;
-using FitnessTracker.Infrastructure.Services;
+using FitnessTracker.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessTracker.Web.Areas.Admin.Controllers
@@ -7,17 +7,17 @@ namespace FitnessTracker.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class ExerciseController : Controller
     {
-        private readonly IExerciseAppService _exerciseService;
+        private readonly IExerciseAppService _exerciseAppService;
 
-        public ExerciseController(IExerciseAppService exerciseService)
+        public ExerciseController(IExerciseAppService exerciseAppService)
         {
-            _exerciseService = exerciseService;
+            _exerciseAppService = exerciseAppService;
         }
 
         public IActionResult Index()
         {
-            var list = _exerciseService.GetAllExercises();
-            return View(list);
+            IList<Exercise> exercises = _exerciseAppService.Select();
+            return View(exercises);
         }
     }
 }

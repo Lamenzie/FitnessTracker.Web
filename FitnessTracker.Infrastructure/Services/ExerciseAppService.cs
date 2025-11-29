@@ -13,7 +13,7 @@ namespace FitnessTracker.Infrastructure.Services
             _context = context;
         }
 
-        public IList<Exercise> GetAllExercises()
+        public IList<Exercise> Select()
         {
             return _context.Exercises.ToList();
         }

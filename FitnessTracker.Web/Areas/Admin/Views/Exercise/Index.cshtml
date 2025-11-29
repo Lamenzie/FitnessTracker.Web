@@ -1,10 +1,18 @@
 ﻿@model IList<FitnessTracker.Domain.Entities.Exercise>
 
-<h1>Správa cviků</h1>
+@{
+    ViewData["Title"] = "Exercise Administration";
+}
 
-<table class="table">
+<h1>Exercise Administration</h1>
+
+<table class="table table-bordered">
     <thead>
-        <tr><th>ID</th><th>Název</th><th>Popis</th></tr>
+        <tr>
+            <th>ID</th>
+            <th>Název</th>
+            <th>Popis</th>
+        </tr>
     </thead>
     <tbody>
         @foreach (var ex in Model)
@@ -17,3 +25,4 @@
         }
     </tbody>
 </table>
+
