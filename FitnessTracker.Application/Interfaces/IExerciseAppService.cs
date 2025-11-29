@@ -5,5 +5,6 @@ namespace FitnessTracker.Application.Interfaces
     public interface IExerciseAppService
     {
         IList<Exercise> Select();
+        void Create(Exercise exercise);
     }
 }

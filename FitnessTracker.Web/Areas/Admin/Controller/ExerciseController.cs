@@ -19,5 +19,21 @@ namespace FitnessTracker.Web.Areas.Admin.Controllers
             IList<Exercise> exercises = _exerciseAppService.Select();
             return View(exercises);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Exercise exercise) {
+            if (!ModelState.IsValid) { 
+                return View(exercise);    
+            }
+
+            _exerciseAppService.Create(exercise);
+            return RedirectToAction("Index");
+        }
     }
 }

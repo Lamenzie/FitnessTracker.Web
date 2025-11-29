@@ -17,5 +17,10 @@ namespace FitnessTracker.Infrastructure.Services
         {
             return _context.Exercises.ToList();
         }
+
+        public void Create(Exercise exercise) { 
+            _context.Exercises.Add(exercise);
+            _context.SaveChanges();
+        }
     }
 }
