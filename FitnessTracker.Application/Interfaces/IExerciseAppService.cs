@@ -6,5 +6,6 @@ namespace FitnessTracker.Application.Interfaces
     {
         IList<Exercise> Select();
         void Create(Exercise exercise);
+        void Delete(int id);
     }
 }

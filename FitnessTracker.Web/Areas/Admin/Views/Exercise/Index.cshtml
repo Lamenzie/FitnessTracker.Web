@@ -25,6 +25,15 @@
                 <td>@ex.Id</td>
                 <td>@ex.Name</td>
                 <td>@ex.Description</td>
+                <td>
+                    <a asp-area="Admin"
+                       asp-controller="Exercise"
+                       asp-action="Delete"
+                       asp-route-id="@ex.Id"
+                       onclick="return confirm('Opravdu chceš tento záznam smazat?');">
+                        Delete
+                    </a>
+                </td>
             </tr>
         }
     </tbody>

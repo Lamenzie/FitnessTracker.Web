@@ -22,5 +22,15 @@ namespace FitnessTracker.Infrastructure.Services
             _context.Exercises.Add(exercise);
             _context.SaveChanges();
         }
+
+        public void Delete(int id)
+        {
+            var exercise = _context.Exercises.FirstOrDefault(e => e.Id == id);
+
+            if (exercise != null) { 
+            _context.Exercises.Remove(exercise); 
+            _context.SaveChanges();
+            }
+        }
     }
 }
