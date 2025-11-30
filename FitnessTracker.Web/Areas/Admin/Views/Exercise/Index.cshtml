@@ -30,12 +30,16 @@
                        asp-controller="Exercise"
                        asp-action="Delete"
                        asp-route-id="@ex.Id"
-                       onclick="return confirm('Opravdu chceš tento záznam smazat?');">
-                        Delete
-                    </a>
+                       onclick="return ConfirmDelete();">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@section Scripts
+{
+    <script src="~/js/dialogs.js"></script>
+}
+
 
