@@ -1,7 +1,9 @@
+using FitnessTracker.Application.Interfaces;
+using FitnessTracker.Domain.Identity;
 using FitnessTracker.Infrastructure.Database;
 using FitnessTracker.Infrastructure.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using FitnessTracker.Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
@@ -16,6 +18,18 @@ builder.Services.AddScoped<IExerciseAppService, ExerciseAppService>();
 // Pøipojení k MySQL
 string connectionString = builder.Configuration.GetConnectionString("MySQL");
 ServerVersion serverVersion = new MySqlServerVersion(new Version(8, 0, 38));
+
+builder.Services
+    .AddIdentity<AppUser, AppRole>(options =>
+    {
+        options.Password.RequireDigit = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequiredLength = 6;
+    })
+    .AddEntityFrameworkStores<FitnessTrackerDbContext>()
+    .AddDefaultTokenProviders();
+
 
 builder.Services.AddDbContext<FitnessTrackerDbContext>(options =>
     options.UseMySql(connectionString, serverVersion));

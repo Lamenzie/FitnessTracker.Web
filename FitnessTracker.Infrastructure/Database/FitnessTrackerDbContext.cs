@@ -1,5 +1,9 @@
 ﻿using FitnessTracker.Domain.Entities;
+using FitnessTracker.Domain.Identity;
 using FitnessTracker.Infrastructure.Database.Seeding;
+using FitnessTracker.Infrastructure.Database.SeedingIdentity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace FitnessTracker.Infrastructure.Database
 {
-    public class FitnessTrackerDbContext : DbContext
+    public class FitnessTrackerDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     {
         public FitnessTrackerDbContext(DbContextOptions<FitnessTrackerDbContext> options)
             : base(options)
@@ -29,18 +33,27 @@ namespace FitnessTracker.Infrastructure.Database
         {
             base.OnModelCreating(modelBuilder);
 
-            // složený klíč UserBadge
+            // ===== DOMAIN =====
             modelBuilder.Entity<UserBadge>()
                 .HasKey(ub => new { ub.UserId, ub.BadgeId });
 
-            // seeding
-            ExerciseInit exerciseInit = new ExerciseInit();
-            modelBuilder.Entity<Exercise>().HasData(exerciseInit.GetDefaultExercises());
+            // ===== DOMAIN SEEDING =====
+            modelBuilder.Entity<Exercise>()
+                .HasData(new ExerciseInit().GetDefaultExercises());
 
-            BadgeInit badgeInit = new BadgeInit();
-            modelBuilder.Entity<Badge>().HasData(badgeInit.GetDefaultBadges());
+            modelBuilder.Entity<Badge>()
+                .HasData(new BadgeInit().GetDefaultBadges());
+
+            // ===== IDENTITY SEEDING =====
+            modelBuilder.Entity<AppRole>()
+                .HasData(new RolesInit().GetRoles());
+
+            modelBuilder.Entity<AppUser>()
+                .HasData(new UsersInit().GetUsers());
+
+            modelBuilder.Entity<IdentityUserRole<Guid>>()
+                .HasData(new UserRolesInit().GetUserRoles());
         }
-
     }
 }
 
