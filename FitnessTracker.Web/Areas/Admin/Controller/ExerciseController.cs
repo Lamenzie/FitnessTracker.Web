@@ -41,5 +41,26 @@ namespace FitnessTracker.Web.Areas.Admin.Controllers
             _exerciseAppService.Delete(id);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            Exercise exercise = _exerciseAppService.GetById(id);
+            if (exercise == null)
+                return NotFound();
+
+            return View(exercise);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Exercise exercise)
+        {
+            if (!ModelState.IsValid)
+                return View(exercise);
+
+            _exerciseAppService.Update(exercise);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

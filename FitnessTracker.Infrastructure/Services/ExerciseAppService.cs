@@ -32,5 +32,17 @@ namespace FitnessTracker.Infrastructure.Services
             _context.SaveChanges();
             }
         }
+
+        public Exercise GetById(int id)
+        {
+            return _context.Exercises.FirstOrDefault(e => e.Id == id);
+        }
+
+        public void Update(Exercise exercise)
+        {
+            _context.Exercises.Update(exercise);
+            _context.SaveChanges();
+        }
+
     }
 }

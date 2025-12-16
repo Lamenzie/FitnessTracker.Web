@@ -26,11 +26,13 @@
                 <td>@ex.Name</td>
                 <td>@ex.Description</td>
                 <td>
-                    <a asp-area="Admin"
-                       asp-controller="Exercise"
-                       asp-action="Delete"
-                       asp-route-id="@ex.Id"
-                       onclick="return ConfirmDelete();">Delete</a>
+                    <a asp-area="Admin" asp-controller="Exercise" asp-action="Delete" asp-route-id="@ex.Id" onclick="return ConfirmDelete();">
+                       Delete
+                   </a>
+                   <a asp-action="Edit" asp-route-id="@ex.Id">
+                       Edit
+                   </a>
+
                 </td>
             </tr>
         }
