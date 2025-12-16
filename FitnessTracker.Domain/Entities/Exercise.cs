@@ -12,11 +12,11 @@ namespace FitnessTracker.Domain.Entities
     public class Exercise : Entity<int>
     {
         [Required(ErrorMessage = "Název je povinný")]
-        [MinLength(3, ErrorMessage = "Název musí mít alespoň 3 znaky")]
+        [FirstLetterCapitalizedCZ]
         public string Name { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Popis je povinný")]
-        [MinLength(5, ErrorMessage = "Popis musí mít alespoň 5 znaků")]
+        [FirstLetterCapitalizedCZ]
         public string Description { get; set; } = string.Empty;
 
         public ICollection<TrainingSession>? TrainingSessions { get; set; }

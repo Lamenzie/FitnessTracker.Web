@@ -46,7 +46,7 @@ namespace FitnessTracker.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            Exercise exercise = _exerciseAppService.GetById(id);
+            var exercise = _exerciseAppService.GetById(id);
             if (exercise == null)
                 return NotFound();
 
