@@ -27,6 +27,7 @@ namespace FitnessTracker.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Exercise exercise) {
             if (!ModelState.IsValid) { 
                 return View(exercise);    

@@ -10,13 +10,19 @@
     <div class="form-group">
         <label>Název cviku</label>
         <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label>Popis</label>
         <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary mt-3">Uložit</button>
     <a asp-action="Index" class="btn btn-secondary mt-3">Zrušit</a>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
