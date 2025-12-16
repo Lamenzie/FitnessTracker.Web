@@ -19,9 +19,4 @@
     <ProjectReference Include="..\FitnessTracker.Infrastructure\FitnessTracker.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\NováSložka1\" />
-    <Folder Include="wwwroot\NováSložka\" />
-  </ItemGroup>
-
 </Project>

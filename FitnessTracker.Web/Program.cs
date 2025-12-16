@@ -34,6 +34,16 @@ builder.Services
 builder.Services.AddDbContext<FitnessTrackerDbContext>(options =>
     options.UseMySql(connectionString, serverVersion));
 
+// ===== Identity cookies (kam se pøesmìruje nepøihlášený uživatel) =====
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Security/Account/Login";
+    options.AccessDeniedPath = "/Security/Account/Login";
+});
+
+// ===== aplikaèní služba pro login / register =====
+builder.Services.AddScoped<IAccountService, AccountIdentityService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
