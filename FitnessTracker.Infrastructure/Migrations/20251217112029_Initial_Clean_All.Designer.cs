@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(FitnessTrackerDbContext))]
-    [Migration("20251216212548_mysql_1.1.0_identity")]
-    partial class mysql_110_identity
+    [Migration("20251217112029_Initial_Clean_All")]
+    partial class Initial_Clean_All
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -152,37 +152,6 @@ namespace FitnessTracker.Infrastructure.Migrations
                     b.ToTable("TrainingSessions");
                 });
 
-            modelBuilder.Entity("FitnessTracker.Domain.Entities.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("LastTrainingDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("WeeklyStreak")
-                        .HasColumnType("int");
-
-                    b.Property<int>("XP")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("FitnessTracker.Domain.Entities.UserBadge", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -198,7 +167,7 @@ namespace FitnessTracker.Infrastructure.Migrations
 
                     b.HasIndex("BadgeId");
 
-                    b.ToTable("UserBadge");
+                    b.ToTable("UserBadges");
                 });
 
             modelBuilder.Entity("FitnessTracker.Domain.Entities.WarningLog", b =>
@@ -254,6 +223,29 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
+                            ConcurrencyStamp = "role-admin",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            ConcurrencyStamp = "role-manager",
+                            Name = "Manager",
+                            NormalizedName = "MANAGER"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333333"),
+                            ConcurrencyStamp = "role-user",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("FitnessTracker.Domain.Identity.AppUser", b =>
@@ -319,6 +311,40 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "92e4d0be-777b-45a9-9784-da625329ac0d",
+                            Email = "admin@local.test",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@LOCAL.TEST",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIZV4qSnv5tF21/FZm25xySEpIha2rvwDfh6DqAyrMoOrebB+Jtzx7wfE8b+z+Vy9A==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "545863cb-f9da-4d15-8865-b1706572e298",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3426ba95-48be-4e50-8b97-5cd8c74f0003",
+                            Email = "manager@local.test",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MANAGER@LOCAL.TEST",
+                            NormalizedUserName = "MANAGER",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOrxcLxFc4Prt+6gh+RkolJGf2OMkuy69S6t0qVrXbXphSmQn57KSgFDTMbdng5nXQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "5c4ee39b-95ae-4645-874b-470e09291cc6",
+                            TwoFactorEnabled = false,
+                            UserName = "manager"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -403,6 +429,18 @@ namespace FitnessTracker.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                            RoleId = new Guid("11111111-1111-1111-1111-111111111111")
+                        },
+                        new
+                        {
+                            UserId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            RoleId = new Guid("22222222-2222-2222-2222-222222222222")
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -432,8 +470,8 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FitnessTracker.Domain.Entities.User", "User")
-                        .WithMany("TrainingSessions")
+                    b.HasOne("FitnessTracker.Domain.Identity.AppUser", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -451,8 +489,8 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FitnessTracker.Domain.Entities.User", "User")
-                        .WithMany("UserBadges")
+                    b.HasOne("FitnessTracker.Domain.Identity.AppUser", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -470,8 +508,8 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FitnessTracker.Domain.Entities.User", "User")
-                        .WithMany("WarningLogs")
+                    b.HasOne("FitnessTracker.Domain.Identity.AppUser", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -540,15 +578,6 @@ namespace FitnessTracker.Infrastructure.Migrations
             modelBuilder.Entity("FitnessTracker.Domain.Entities.Exercise", b =>
                 {
                     b.Navigation("TrainingSessions");
-                });
-
-            modelBuilder.Entity("FitnessTracker.Domain.Entities.User", b =>
-                {
-                    b.Navigation("TrainingSessions");
-
-                    b.Navigation("UserBadges");
-
-                    b.Navigation("WarningLogs");
                 });
 #pragma warning restore 612, 618
         }

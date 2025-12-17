@@ -149,37 +149,6 @@ namespace FitnessTracker.Infrastructure.Migrations
                     b.ToTable("TrainingSessions");
                 });
 
-            modelBuilder.Entity("FitnessTracker.Domain.Entities.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("LastTrainingDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("WeeklyStreak")
-                        .HasColumnType("int");
-
-                    b.Property<int>("XP")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("FitnessTracker.Domain.Entities.UserBadge", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -195,7 +164,7 @@ namespace FitnessTracker.Infrastructure.Migrations
 
                     b.HasIndex("BadgeId");
 
-                    b.ToTable("UserBadge");
+                    b.ToTable("UserBadges");
                 });
 
             modelBuilder.Entity("FitnessTracker.Domain.Entities.WarningLog", b =>
@@ -345,15 +314,15 @@ namespace FitnessTracker.Infrastructure.Migrations
                         {
                             Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "94259de9-c40d-4b6a-af0f-bda8ff5d2caf",
+                            ConcurrencyStamp = "92e4d0be-777b-45a9-9784-da625329ac0d",
                             Email = "admin@local.test",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCAL.TEST",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFIFlF/eM17z0nXG/68MqQ7sNoC3o6W/0ROtgpqHWmSbtdiKHy7ddNVMFAG287JchQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIZV4qSnv5tF21/FZm25xySEpIha2rvwDfh6DqAyrMoOrebB+Jtzx7wfE8b+z+Vy9A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "89720194-611e-4d75-a918-0f90db5cc229",
+                            SecurityStamp = "545863cb-f9da-4d15-8865-b1706572e298",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -361,15 +330,15 @@ namespace FitnessTracker.Infrastructure.Migrations
                         {
                             Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "519864f7-329f-4533-b065-9952bb7cce51",
+                            ConcurrencyStamp = "3426ba95-48be-4e50-8b97-5cd8c74f0003",
                             Email = "manager@local.test",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MANAGER@LOCAL.TEST",
                             NormalizedUserName = "MANAGER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDBBd432ajKHrXXb54o0RwVuc2lznQf51aDr3zz/seTtN8lT4Dc4EL/bysJ2NMTpVQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOrxcLxFc4Prt+6gh+RkolJGf2OMkuy69S6t0qVrXbXphSmQn57KSgFDTMbdng5nXQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "18a69a77-5d09-4962-80e5-5d7e609dcd9c",
+                            SecurityStamp = "5c4ee39b-95ae-4645-874b-470e09291cc6",
                             TwoFactorEnabled = false,
                             UserName = "manager"
                         });
@@ -498,8 +467,8 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FitnessTracker.Domain.Entities.User", "User")
-                        .WithMany("TrainingSessions")
+                    b.HasOne("FitnessTracker.Domain.Identity.AppUser", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -517,8 +486,8 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FitnessTracker.Domain.Entities.User", "User")
-                        .WithMany("UserBadges")
+                    b.HasOne("FitnessTracker.Domain.Identity.AppUser", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -536,8 +505,8 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FitnessTracker.Domain.Entities.User", "User")
-                        .WithMany("WarningLogs")
+                    b.HasOne("FitnessTracker.Domain.Identity.AppUser", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -606,15 +575,6 @@ namespace FitnessTracker.Infrastructure.Migrations
             modelBuilder.Entity("FitnessTracker.Domain.Entities.Exercise", b =>
                 {
                     b.Navigation("TrainingSessions");
-                });
-
-            modelBuilder.Entity("FitnessTracker.Domain.Entities.User", b =>
-                {
-                    b.Navigation("TrainingSessions");
-
-                    b.Navigation("UserBadges");
-
-                    b.Navigation("WarningLogs");
                 });
 #pragma warning restore 612, 618
         }

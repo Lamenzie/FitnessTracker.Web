@@ -5,12 +5,6 @@ using FitnessTracker.Infrastructure.Database.SeedingIdentity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FitnessTracker.Infrastructure.Database
 {
@@ -21,8 +15,7 @@ namespace FitnessTracker.Infrastructure.Database
         {
         }
 
-        // DbSety pro entity z Domain vrstvy
-        public DbSet<User> Users { get; set; }
+        // DOMAIN entity
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<TrainingSession> TrainingSessions { get; set; }
         public DbSet<UserBadge> UserBadges { get; set; }
@@ -33,9 +26,14 @@ namespace FitnessTracker.Infrastructure.Database
         {
             base.OnModelCreating(modelBuilder);
 
-            // ===== DOMAIN =====
+            // ===== RELACE =====
             modelBuilder.Entity<UserBadge>()
                 .HasKey(ub => new { ub.UserId, ub.BadgeId });
+
+            modelBuilder.Entity<TrainingSession>()
+                .HasOne(ts => ts.Exercise)
+                .WithMany(e => e.TrainingSessions)
+                .HasForeignKey(ts => ts.ExerciseId);
 
             // ===== DOMAIN SEEDING =====
             modelBuilder.Entity<Exercise>()
@@ -56,4 +54,3 @@ namespace FitnessTracker.Infrastructure.Database
         }
     }
 }
-

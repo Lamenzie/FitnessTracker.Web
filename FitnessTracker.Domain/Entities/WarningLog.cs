@@ -1,22 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using FitnessTracker.Domain.Identity;
 
 namespace FitnessTracker.Domain.Entities
 {
-    [Table("WarningLogs")]
-    public class WarningLog : Entity<Guid>
+    public class WarningLog
     {
+        [Key]
+        public Guid Id { get; set; }
+
         public Guid UserId { get; set; }
         public Guid TrainingSessionId { get; set; }
+
         public string Message { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
 
-        public User? User { get; set; }
-        public TrainingSession? TrainingSession { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public AppUser User { get; set; } = null!;
+
+        [ForeignKey(nameof(TrainingSessionId))]
+        public TrainingSession TrainingSession { get; set; } = null!;
     }
 }
