@@ -1,8 +1,36 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Fitness Tracker";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center mt-5">
+    <h1 class="display-4">Fitness Tracker</h1>
+
+    <p class="lead mt-4">
+        Sleduj své tréninky, zvyšuj výkon a měj přehled o svém pokroku.
+    </p>
+
+    @if (!User.Identity?.IsAuthenticated ?? true)
+    {
+        <div class="mt-5">
+            <a class="btn btn-primary btn-lg me-3"
+               asp-area="Security"
+               asp-controller="Account"
+               asp-action="Login">
+                Přihlásit se
+            </a>
+
+            <a class="btn btn-outline-secondary btn-lg"
+               asp-area="Security"
+               asp-controller="Account"
+               asp-action="Register">
+                Registrace
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success mt-5">
+            Jsi přihlášen jako <strong>@User.Identity.Name</strong>.
+        </div>
+    }
 </div>

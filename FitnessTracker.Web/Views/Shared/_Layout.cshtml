@@ -7,11 +7,11 @@
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/FitnessTracker.Web.styles.css" asp-append-version="true" />
 </head>
+
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom shadow-sm mb-3">
             <div class="container-fluid">
 
                 <a class="navbar-brand"
@@ -21,20 +21,11 @@
                     FitnessTracker
                 </a>
 
-                <button class="navbar-toggler" type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="collapse navbar-collapse">
                     <ul class="navbar-nav me-auto">
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark"
+                            <a class="nav-link"
                                asp-area=""
                                asp-controller="Home"
                                asp-action="Index">
@@ -42,37 +33,39 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-controller="Home"
-                               asp-action="Privacy">
-                                Privacy
-                            </a>
-                        </li>
+                        @* USER MENU *@
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-area="User"
+                                   asp-controller="Training"
+                                   asp-action="Index">
+                                    Moje tréninky
+                                </a>
+                            </li>
+                        }
 
-                        @* ===== ADMIN MENU (jen Admin + Manager) ===== *@
+                        @* ADMIN MENU *@
                         @if (User.Identity?.IsAuthenticated == true &&
                                                 (User.IsInRole("Admin") || User.IsInRole("Manager")))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark"
+                                <a class="nav-link"
                                    asp-area="Admin"
                                    asp-controller="Exercise"
                                    asp-action="Index">
-                                    Admin
+                                    Administrace
                                 </a>
                             </li>
                         }
                     </ul>
 
                     <ul class="navbar-nav">
-
-                        @* ===== LOGIN / LOGOUT ===== *@
                         @if (User.Identity?.IsAuthenticated == true)
                         {
-                            <li class="nav-item">
-                                <span class="navbar-text me-2">
+                            <li class="nav-item me-2">
+                                <span class="navbar-text">
                                     @User.Identity.Name
                                 </span>
                             </li>
@@ -81,11 +74,10 @@
                                 <form asp-area="Security"
                                       asp-controller="Account"
                                       asp-action="Logout"
-                                      method="post"
-                                      class="d-inline">
+                                      method="post">
                                     @Html.AntiForgeryToken()
                                     <button type="submit"
-                                            class="nav-link btn btn-link text-dark">
+                                            class="btn btn-link nav-link">
                                         Odhlásit
                                     </button>
                                 </form>
@@ -94,7 +86,7 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark"
+                                <a class="nav-link"
                                    asp-area="Security"
                                    asp-controller="Account"
                                    asp-action="Login">
@@ -103,7 +95,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark"
+                                <a class="nav-link"
                                    asp-area="Security"
                                    asp-controller="Account"
                                    asp-action="Register">
@@ -123,16 +115,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 – FitnessTracker
-        </div>
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>

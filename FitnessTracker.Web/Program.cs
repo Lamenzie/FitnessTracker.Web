@@ -44,6 +44,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 // ===== aplikaèní služba pro login / register =====
 builder.Services.AddScoped<IAccountService, AccountIdentityService>();
 
+// ===== aplikaèní služba pro TrainingSession =====
+builder.Services.AddScoped<ITrainingSessionAppService, TrainingSessionAppService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
